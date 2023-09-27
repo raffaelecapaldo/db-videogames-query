@@ -200,7 +200,17 @@ WHERE a.name LIKE "Gioco dell'anno"
 
 9. Selezionare i giocatori che hanno giocato al gioco piÃ¹ atteso del 2018 in un torneo del 2019 (3306)
 
-
+SELECT  p.*
+FROM award_videogame av 
+JOIN videogames v ON v.id = av.videogame_id 
+JOIN awards a ON a.id = av.award_id 
+JOIN tournament_videogame tv ON v.id = tv.videogame_id 
+JOIN tournaments t ON t.id = tv.tournament_id
+JOIN player_tournament pt ON pt.tournament_id = t.id 
+JOIN players p ON pt.player_id = p.id
+WHERE t.`year` = 2019
+	AND a.name LIKE "Gioco più atteso"
+	AND av.`year` = 2018;
 
 ##### BONUS
 10. Selezionare i dati della prima software house che ha rilasciato un gioco, assieme ai dati del gioco stesso (software house id : 5)
