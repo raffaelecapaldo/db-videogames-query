@@ -223,9 +223,24 @@ LIMIT 1;
 
 11. Selezionare i dati del videogame (id, name, release_date, totale recensioni) con piÃ¹ recensioni (videogame id : potrebbe uscire 449 o 398, sono entrambi a 20)
 
-
+SELECT v.*, count(*) 'reviews_qt'
+FROM reviews r 
+JOIN videogames v ON v.id = r.videogame_id 
+GROUP BY videogame_id
+ORDER BY reviews_qt DESC
+LIMIT 2; -- od 1 per averne soltanto uno come dice la traccia
 
 12. Selezionare la software house che ha vinto piÃ¹ premi tra il 2015 e il 2016 (software house id : potrebbe uscire 3 o 1, sono entrambi a 3)
 
+SELECT sh.*, COUNT(a.id) 'awards_count'
+FROM software_houses sh 
+JOIN videogames v ON v.software_house_id = sh.id 
+JOIN award_videogame av ON v.id = av.videogame_id 
+JOIN awards a ON a.id = av.award_id 
+WHERE av.`year` = 2015
+OR av.`year` = 2016
+GROUP BY sh.id
+ORDER BY awards_count DESC
+LIMIT 2; -- od 1 per averne soltanto uno come dice la traccia
 
 13. Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 2 (10)
