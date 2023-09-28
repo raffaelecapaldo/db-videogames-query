@@ -244,3 +244,11 @@ ORDER BY awards_count DESC
 LIMIT 2; -- od 1 per averne soltanto uno come dice la traccia
 
 13. Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 2 (10)
+
+SELECT c.*, AVG(r.rating)
+FROM category_videogame cv 
+JOIN categories c ON c.id = cv.category_id 
+JOIN videogames v ON v.id = cv.videogame_id 
+JOIN reviews r ON r.videogame_id = v.id 
+GROUP BY c.id
+HAVING AVG(r.rating) > 2;
